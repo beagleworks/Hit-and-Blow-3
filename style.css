@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #1a1a1a;
+    --primary-color: #ffffff;
+    --accent-color: #ff4757;
+    --secondary-color: #333333;
+    --font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+header h1 {
+    color: var(--accent-color);
+    margin-top: 0;
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+.input-area {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 2rem 0;
+}
+
+#guess-input {
+    font-family: var(--font-family);
+    font-size: 2rem;
+    width: 120px;
+    padding: 10px;
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    text-align: center;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+#guess-input:focus {
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+#guess-button {
+    font-family: var(--font-family);
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#guess-button:hover {
+    background-color: #ff6b81;
+    transform: translateY(-2px);
+}
+
+#result-area {
+    font-size: 1.5rem;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#history-area {
+    margin-top: 2rem;
+}
+
+#history-list {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#history-list li {
+    background-color: var(--bg-color);
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヒットアンドブロー</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ヒットアンドブロー</h1>
+            <p>4桁の数字を当ててください</p>
+        </header>
+        <main>
+            <div class="input-area">
+                <input type="text" id="guess-input" maxlength="4" placeholder="0000">
+                <button id="guess-button">推測</button>
+            </div>
+            <div id="result-area">
+                <!-- 結果がここに表示されます -->
+            </div>
+            <div id="history-area">
+                <h2>履歴</h2>
+                <ul id="history-list">
+                    <!-- 履歴がここに表示されます -->
+                </ul>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
