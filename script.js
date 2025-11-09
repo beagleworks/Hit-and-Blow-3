@@ -3,11 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessButton = document.getElementById('guess-button');
     const resultArea = document.getElementById('result-area');
     const historyList = document.getElementById('history-list');
+    const allowDuplicatesCheckbox = document.getElementById('allow-duplicates');
+    const numDigitsSelect = document.getElementById('num-digits');
+    const instructionText = document.getElementById('instruction-text');
 
     let secret;
     let gameEnded = false;
+    const secretLength = 4;
+    let characterPool = 10;
+    let allowDuplicates = false;
 
     function newGame() {
+        characterPool = parseInt(numDigitsSelect.value);
+        allowDuplicates = allowDuplicatesCheckbox.checked;
+        guessInput.maxLength = secretLength;
+        guessInput.placeholder = '0'.repeat(secretLength);
+        instructionText.textContent = `${secretLength}桁の数字を当ててください`;
+
         secret = generateSecret();
         resultArea.innerHTML = '';
         historyList.innerHTML = '';
@@ -20,17 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateSecret() {
-        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        const digits = '0123456789ABCDEF'.split('');
+        let availableDigits = digits.slice(0, characterPool);
         let secret = '';
-        for (let i = 0; i < 4; i++) {
-            const randomIndex = Math.floor(Math.random() * digits.length);
-            secret += digits.splice(randomIndex, 1)[0];
+        for (let i = 0; i < secretLength; i++) {
+            const randomIndex = Math.floor(Math.random() * availableDigits.length);
+            const digit = availableDigits[randomIndex];
+            secret += digit;
+            if (!allowDuplicates) {
+                availableDigits.splice(randomIndex, 1);
+            }
         }
         return secret;
     }
 
     function handleGuess() {
-        const guess = guessInput.value;
+        const guess = guessInput.value.toUpperCase();
 
         if (!isValid(guess)) {
             return;
@@ -40,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         addToHistory(guess, hits, blows);
 
-        if (hits === 4) {
+        if (hits === secretLength) {
             endGame(true);
         } else {
             resultArea.textContent = `ヒット: ${hits}, ブロー: ${blows}`;
@@ -50,14 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isValid(guess) {
-        if (guess.length !== 4 || !/^\d{4}$/.test(guess)) {
-            resultArea.textContent = '4桁の数字を入力してください。';
+        if (guess.length !== secretLength) {
+            resultArea.textContent = `${secretLength}桁の数字を入力してください。`;
             return false;
         }
-        const uniqueDigits = new Set(guess.split(''));
-        if (uniqueDigits.size !== 4) {
-            resultArea.textContent = '重複しない4桁の数字を入力してください。';
+        const validChars = '0123456789ABCDEF'.substring(0, characterPool);
+        const regex = new RegExp(`^[${validChars}]{${secretLength}}$`);
+        if (!regex.test(guess)) {
+            resultArea.textContent = `有効な${secretLength}桁の数字を入力してください。`;
             return false;
+        }
+        if (!allowDuplicates) {
+            const uniqueDigits = new Set(guess.split(''));
+            if (uniqueDigits.size !== secretLength) {
+                resultArea.textContent = `重複しない${secretLength}桁の数字を入力してください。`;
+                return false;
+            }
         }
         return true;
     }
@@ -65,11 +90,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkGuess(guess) {
         let hits = 0;
         let blows = 0;
-        for (let i = 0; i < 4; i++) {
-            if (guess[i] === secret[i]) {
+        const secretChars = secret.split('');
+        const guessChars = guess.split('');
+
+        // Find hits
+        for (let i = 0; i < secretLength; i++) {
+            if (guessChars[i] === secretChars[i]) {
                 hits++;
-            } else if (secret.includes(guess[i])) {
-                blows++;
+                secretChars[i] = null; // Mark as checked
+                guessChars[i] = null;
+            }
+        }
+
+        // Find blows
+        for (let i = 0; i < secretLength; i++) {
+            if (guessChars[i] !== null) {
+                const index = secretChars.indexOf(guessChars[i]);
+                if (index !== -1) {
+                    blows++;
+                    secretChars[index] = null; // Mark as checked
+                }
             }
         }
         return { hits, blows };
@@ -104,6 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 newGame();
             } else {
                 handleGuess();
+            }
+        }
+    });
+
+    allowDuplicatesCheckbox.addEventListener('change', newGame);
+    numDigitsSelect.addEventListener('change', newGame);
+
+    guessInput.addEventListener('input', () => {
+        if (!allowDuplicates) {
+            const value = guessInput.value;
+            const uniqueChars = new Set(value.split(''));
+            if (uniqueChars.size < value.length) {
+                guessInput.value = Array.from(uniqueChars).join('');
             }
         }
     });
