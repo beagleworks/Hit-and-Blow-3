@@ -2,6 +2,11 @@
 
 This is a classic "Hit and Blow" game implemented as a static web application.
 
+## Introduction
+
+This application was created using Jules(Google).  
+For my article: https://zenn.dev/beagle/articles/bc6ef88dd68615
+
 ## How to Play
 
 1.  **Start a new game:** A secret 4-digit number is automatically generated when you open the game.
