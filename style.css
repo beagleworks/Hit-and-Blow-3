@@ -35,6 +35,36 @@ header h1 {
     text-shadow: 0 0 5px var(--accent-color);
 }
 
+.options-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.options-area label {
+    font-size: 1rem;
+}
+
+#allow-duplicates {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-color);
+}
+
+#num-digits {
+    font-family: var(--font-family);
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    outline: none;
+}
+
 .input-area {
     display: flex;
     justify-content: center;

@@ -10,9 +10,27 @@
     <div class="container">
         <header>
             <h1>ヒットアンドブロー</h1>
-            <p>4桁の数字を当ててください</p>
+            <p id="instruction-text">4桁の数字を当ててください</p>
         </header>
         <main>
+            <div class="options-area">
+                <label for="allow-duplicates">数値の重複を許容する</label>
+                <input type="checkbox" id="allow-duplicates">
+                <label for="num-digits">利用する数字の数</label>
+                <select id="num-digits">
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
             <div class="input-area">
                 <input type="text" id="guess-input" maxlength="4" placeholder="0000">
                 <button id="guess-button">推測</button>
